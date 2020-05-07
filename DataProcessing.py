@@ -2,15 +2,35 @@ import re
 import sqlite3
 from Stopwords import remove_stopwords_from_words
 
+def article_init():
+    '''文献原文预处理'''
+    fopen = open("article.txt", "r")
+    contents = fopen.read()
+    fwrite = open("article_processed.txt", "w")
+
+    #全文转化为小写
+    contents = contents.lower()
+    #删除"
+    contents = re.sub("\"", "", contents)
+    #替换;为,
+    contents = re.sub(";", ",", contents)
+    #替换!/?为.
+    contents = re.sub("[!\?]", ".", contents)
+
+
+    fwrite.write(contents)
+
 
 def article_transform_to_sentences():
     '''用于把原文拆分为短句'''
 
-    fopen = open("article.txt", "r")
+    #文献原文预处理
+    article_init()
+
+    fopen = open("article_processed.txt", "r")
     contents = fopen.read()
     fwrite = open("article_sentences.txt", "w")
-    
-    contents = contents.lower()
+
 
     #匹配出以标点结尾的句子
     sentences = re.findall(".*?[\.,\?]", contents, re.S)
@@ -18,8 +38,10 @@ def article_transform_to_sentences():
     for i in range(len(sentences)):
         fwrite.write(str(sentences[i]).strip() + "\n")
 
+
 def sentences_transform_to_words():
     '''用于把短句拆分为单词'''
+
     fopen = open("article_sentences.txt", "r")
     contents = fopen.read()
     fwrite = open("article_words.txt", "w")
@@ -53,6 +75,7 @@ def db_create_WaE():
 
     db.close()
 
+
 def db_insert_WaE(word, quantity):
     '''向表WaE中压入数据'''
 
@@ -63,7 +86,6 @@ def db_insert_WaE(word, quantity):
     sql1 = 'INSERT INTO WaE(WORD, QUANTITY) VALUES("%s", %s);' % (word, quantity)
     #修改
     sql2 = 'UPDATE WaE SET QUANTITY = %s WHERE WORD = "%s";' % (quantity, word)
-
     try:
         cur.execute(sql1)
         db.commit()
@@ -74,8 +96,10 @@ def db_insert_WaE(word, quantity):
 
     db.close()
 
+
 def words_count():
     '''单词计数并将数据压入表WaE中'''
+
     fopen = open("article_sentences.txt", "r")
     contents = fopen.read()
 
@@ -84,19 +108,13 @@ def words_count():
     #把单词拉入到words列表中
     words = re.findall("\w+", words, re.S)
 
-
-    print(words)
     #将list转为set
     s = set(words)
     #删除停止词
-
     s = list(s)
-    print(s)
-
     remove_stopwords_from_words(s)
-    print(s)
 
-
+    #空字典
     dict = {}
     #统计元素个数
     for item in s:
@@ -104,6 +122,7 @@ def words_count():
     #压入数据
     for key, value in dict.items():
         db_insert_WaE(key, value)
+
 
 def db_recreate_WaE():
     '''重新创建表WaE'''
@@ -121,9 +140,12 @@ def db_recreate_WaE():
     db.close()
     db_create_WaE()
 
+
 def init_data():
     db_recreate_WaE()
     db_create_WaE()
+
     article_transform_to_sentences()
     sentences_transform_to_words()
+
     words_count()
