@@ -2,10 +2,8 @@ import re
 import sqlite3
 from Stopwords import remove_stopwords_from_words
 
-def article_init():
+def article_init(contents):
     '''文献原文预处理'''
-    fopen = open("article.txt", "r")
-    contents = fopen.read()
     fwrite = open("article_processed.txt", "w")
 
     #全文转化为小写
@@ -21,11 +19,11 @@ def article_init():
     fwrite.write(contents)
 
 
-def article_transform_to_sentences():
+def article_transform_to_sentences(article):
     '''用于把原文拆分为短句'''
 
     #文献原文预处理
-    article_init()
+    article_init(article)
 
     fopen = open("article_processed.txt", "r")
     contents = fopen.read()
@@ -141,11 +139,11 @@ def db_recreate_WaE():
     db_create_WaE()
 
 
-def init_data():
+def init_data(article):
     db_recreate_WaE()
     db_create_WaE()
 
-    article_transform_to_sentences()
+    article_transform_to_sentences(article)
     sentences_transform_to_words()
 
     words_count()
