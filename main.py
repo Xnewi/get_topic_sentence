@@ -1,28 +1,79 @@
 from DataProcessing import init_data
 from Stopwords import init_Stopwords
 from Stopwords import db_search_Stopwords
+from TF_IDF import db_insert_TFIDF_WaE
+import re
+import sqlite3
 import tkinter
 from tkinter import scrolledtext,filedialog,messagebox
 
 
 
+def get_result():
+    fopen = open("article_sentences.txt", "r")
+    contents = fopen.readline()
+
+    db = sqlite3.connect("PythonLP.db")
+    cur = db.cursor()
+
+    max = 0
+    now = 0
+    result = ''
+    while contents:
+        now += 1
+        #删除换行符
+        words = re.sub("\n", "", contents)
+        #将所有标点替换为空格
+        words = re.sub("[\.,\?]", " ", words)
+        #提取单个单词
+        words = re.findall(".*?\s", words, re.S)
+        sum = 0
+        for item in words:
+            sql = 'SELECT*FROM WaE WHERE WORD LIKE "%s";' % (item.strip())
+
+            cur.execute(sql)
+            try:
+                result = cur.fetchone()[2]
+            except:
+                result = 0
+            sum += result
+
+        #print(contents, sum / len(words))
+        if max < sum / len(words):
+            max = now
+        contents = fopen.readline()
+
+    #print(max)
+    fopenagain = open("article_sentences.txt", "r")
+    for i in range(0, max):
+        result = fopenagain.readline()
+    return result
+
 def process(article):
-    button1.config(state='disabled')
-    button2.config(state='disabled')
-    init_data(article)
-    init_Stopwords()
-    result = '我是中心句（假的）'
-    messagebox.showinfo(title='找到中心句',message=result)
+    textvar=tkinter.StringVar()
+    textvar.initialize('处理中......')
+
+    try:
+        init_data(article)
+        init_Stopwords()
+        db_insert_TFIDF_WaE()
+        result=get_result()
+    except:
+        messagebox.showerror(title='处理错误', message='处理出错了，检查一下文章是否符合规范！')
+    else:
+        messagebox.showinfo(title='找到中心句',message=result)
+    
     button1.config(state='active')
     button2.config(state='active')
 
 def from_input():
+    button1.config(state='disabled')
+    button2.config(state='disabled')
     process(textbox.get('0.0','end'))
 def from_file():
     with filedialog.askopenfile('r',title="上传文件", filetypes=[("文本文件", ".txt")]) as f:
         textbox.delete(1.0, 'end')
         textbox.insert(1.0, f.read())
-        process(f.read())
 
 # 主窗口
 window = tkinter.Tk()

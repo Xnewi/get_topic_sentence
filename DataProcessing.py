@@ -21,14 +21,12 @@ def article_init(contents):
 
 def article_transform_to_sentences(article):
     '''用于把原文拆分为短句'''
-
     #文献原文预处理
     article_init(article)
 
     fopen = open("article_processed.txt", "r")
     contents = fopen.read()
     fwrite = open("article_sentences.txt", "w")
-
 
     #匹配出以标点结尾的句子
     sentences = re.findall(".*?[\.,\?]", contents, re.S)
@@ -39,7 +37,6 @@ def article_transform_to_sentences(article):
 
 def sentences_transform_to_words():
     '''用于把短句拆分为单词'''
-
     fopen = open("article_sentences.txt", "r")
     contents = fopen.read()
     fwrite = open("article_words.txt", "w")
@@ -60,11 +57,10 @@ def db_create_WaE():
     LP = Language Processing
     WaE = Words and Expressions
     '''
-
     db = sqlite3.connect("PythonLP.db")
     cur = db.cursor()
 
-    sql = '''CREATE TABLE WaE(WORD CHAR(50) PRIMARY KEY NOT NULL, QUANTITY INT NOT NULL);'''
+    sql = '''CREATE TABLE WaE(WORD CHAR(50) PRIMARY KEY NOT NULL, QUANTITY INT NOT NULL, TFIDF REAL);'''
     try:
         cur.execute(sql)
         db.commit()
@@ -76,12 +72,11 @@ def db_create_WaE():
 
 def db_insert_WaE(word, quantity):
     '''向表WaE中压入数据'''
-
     db = sqlite3.connect("PythonLP.db")
     cur = db.cursor()
 
     #新增
-    sql1 = 'INSERT INTO WaE(WORD, QUANTITY) VALUES("%s", %s);' % (word, quantity)
+    sql1 = 'INSERT INTO WaE(WORD, QUANTITY, TFIDF) VALUES("%s", %s, 0);' % (word, quantity)
     #修改
     sql2 = 'UPDATE WaE SET QUANTITY = %s WHERE WORD = "%s";' % (quantity, word)
     try:
@@ -97,7 +92,6 @@ def db_insert_WaE(word, quantity):
 
 def words_count():
     '''单词计数并将数据压入表WaE中'''
-
     fopen = open("article_sentences.txt", "r")
     contents = fopen.read()
 
@@ -124,7 +118,6 @@ def words_count():
 
 def db_recreate_WaE():
     '''重新创建表WaE'''
-
     db = sqlite3.connect("PythonLP.db")
     cur = db.cursor()
 

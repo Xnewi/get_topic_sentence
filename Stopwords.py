@@ -17,7 +17,6 @@ def db_creat_Stopwords():
 
 def db_insert_Stopwords(word):
     '''向表Stopwords中压入数据'''
-
     db = sqlite3.connect("PythonLP.db")
     cur = db.cursor()
 
@@ -60,7 +59,6 @@ def db_search_Stopwords(word):
 
 def remove_stopwords_from_words(list):
     '''从指定list中删除stopword'''
-
     #创建空集合
     recurred = set()
     #发现其中的stopword
@@ -70,7 +68,7 @@ def remove_stopwords_from_words(list):
     #删除s中所有的stopword
     for item in recurred:
         list.remove(item)
-        print("%s removed" % item)
+        #print("%s removed" % item)
 
 def init_Stopwords():
     db_creat_Stopwords()
