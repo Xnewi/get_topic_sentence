@@ -62,14 +62,16 @@ def process(article):
         messagebox.showwarning(title='处理错误', message='处理过程有出错，检查一下文章是否符合规范！\n错误信息：' + str(err))
     else:
         messagebox.showinfo(title='找到中心句',message=result)
-    
+    var.set('😜')
     button1.config(state='active')
     button2.config(state='active')
 
 def from_input():
+    var.set('拼命处理中，客官稍等😚')
     button1.config(state='disabled')
     button2.config(state='disabled')
     process(textbox.get('0.0','end'))
+
 def from_file():
     with filedialog.askopenfile('r',title="上传文件", filetypes=[("文本文件", ".txt")]) as f:
         textbox.delete(1.0, 'end')
@@ -85,6 +87,10 @@ window.iconbitmap('icon.ico')
 tkinter.Label(window,text='请输入文章（英文）：',font=('微软雅黑',14)).place(x=10,y=10,anchor='nw')
 textbox = scrolledtext.ScrolledText(window,font=('微软雅黑',14))
 textbox.place(x=10,y=40,anchor='nw',width = 780,height = 500)
+
+var = tkinter.StringVar()
+var.set('😜')
+tkinter.Label(window, textvariable = var,font=('微软雅黑', 12)).place(x = 50,y = 560)
 
 button1 = tkinter.Button(window,text='提交',font=('微软雅黑',14),command=from_input)
 button1.place(x=340,y = 550, anchor='nw',width = 120, height = 40)
