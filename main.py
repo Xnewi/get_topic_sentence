@@ -7,8 +7,6 @@ import sqlite3
 import tkinter
 from tkinter import scrolledtext,filedialog,messagebox
 
-
-
 def get_result():
     fopen = open("article_sentences.txt", "r")
     contents = fopen.readline()
@@ -39,8 +37,10 @@ def get_result():
             sum += result
 
         #print(contents, sum / len(words))
-        if max < sum / len(words):
-            max = now
+        try:
+            if max < sum / len(words):
+                max = now
+        except: pass
         contents = fopen.readline()
 
     #print(max)
@@ -58,8 +58,8 @@ def process(article):
         init_Stopwords()
         db_insert_TFIDF_WaE()
         result=get_result()
-    except:
-        messagebox.showerror(title='处理错误', message='处理出错了，检查一下文章是否符合规范！')
+    except Exception as err:
+        messagebox.showwarning(title='处理错误', message='处理过程有出错，检查一下文章是否符合规范！\n错误信息：' + str(err))
     else:
         messagebox.showinfo(title='找到中心句',message=result)
     
