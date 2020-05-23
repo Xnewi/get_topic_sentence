@@ -9,6 +9,8 @@ from tkinter import scrolledtext, filedialog, messagebox
 
 
 def get_result():
+
+    
     fopen = open("article_sentences.txt", "r")
     contents = fopen.readline()
 
@@ -46,9 +48,9 @@ def get_result():
         contents = fopen.readline()
 
     # print(max)
-    fopenagain = open("article_sentences.txt", "r")
+    fopen_again = open("article_sentences.txt", "r")
     for i in range(0, max):
-        result = fopenagain.readline()
+        result = fopen_again.readline()
     return result
 
 
