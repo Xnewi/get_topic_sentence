@@ -2,4 +2,4 @@ __pycache__/
 PythonLP.db
 *.txt
 .vscode/
-.pdf
+*.pdf
