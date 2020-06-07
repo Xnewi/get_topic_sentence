@@ -1,3 +1,4 @@
+from PdfScan import PdfScan
 from DataProcessing import init_data
 from Stopwords import init_Stopwords
 from Stopwords import db_search_Stopwords
@@ -81,11 +82,20 @@ def from_input():
 
 
 def from_file():
-    with filedialog.askopenfile('r', title="上传文件", filetypes=[("文本文件", ".txt")]) as f:
-        textbox.delete(1.0, 'end')
-        textbox.insert(1.0, f.read())
-
-
+    textbox.delete(1.0, 'end')
+    filepath = filedialog.askopenfilename()
+    if filepath[-4:] == ".pdf":
+        pdf = PdfScan()
+        pdf.init(filepath)
+        for i in range(1, pdf.get_total_pages()):
+            textbox.insert('end', pdf.get_optimized_content(i))
+    elif filepath[-4:] == ".txt":
+        f = open(filepath, 'rb')
+        textbox.insert('end', f.read())
+        f.close()
+    else:
+        messagebox.showwarning(title='文件格式错误', message='请上传txt或pdf文件')
+        
 # 主窗口
 window = tkinter.Tk()
 window.title('文章中心句提取程序')

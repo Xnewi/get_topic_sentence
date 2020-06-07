@@ -3,11 +3,12 @@ import re
 
 
 class PdfScan():
-    def __init__(self, filename):
+    def init(self, filename):
         '''初始化：提供pdf文件名称'''
         # 以二进制的方式打开指定pdf文件
         pdfFile = open(filename, 'rb')
         self.pdfReader = PyPDF2.PdfFileReader(pdfFile)
+        pdfFile.close
 
     def get_total_pages(self):
         '''获取pdf总页数'''
@@ -29,9 +30,3 @@ class PdfScan():
         contents = re.sub(" -", "-", contents)
 
         return contents
-
-
-test = PdfScan("(1958)Luhn.pdf")
-print(test.get_page_content(0))
-print("<<<")
-print(test.get_optimized_content(0))
