@@ -93,7 +93,7 @@ class DB_COCA():
         except:
             self.db.rollback()
 
-    def COCA_insert(self,word, rank):
+    def COCA_insert(self, word, rank):
         '''向表COCA中压入数据'''
         # 新增
         sql = 'INSERT INTO COCA(WORD, RANK) VALUES("%s", %s);' % (word, rank)
@@ -106,7 +106,7 @@ class DB_COCA():
     def COCA_init(self):
         '''从txt文件初始化表COCA'''
 
-        fopen = open("coca.txt", "r")
+        fopen = open("coca.txt", "r", encoding='utf-8')
         contents = fopen.readline()
 
         while contents:
@@ -196,7 +196,7 @@ def db_init_COCA():
     db = sqlite3.connect("PythonLP.db")
     cur = db.cursor()
 
-    fopen = open("coca.txt", "r")
+    fopen = open("coca.txt", "r", encoding='utf-8')
     contents = fopen.readline()
 
     while contents:
