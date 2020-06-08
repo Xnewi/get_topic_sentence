@@ -9,10 +9,10 @@ import tkinter
 from tkinter import scrolledtext, filedialog, messagebox
 
 
+
 def get_result():
 
-    
-    fopen = open("article_sentences.txt", "r")
+    fopen = open("article_sentences.txt", "r", encoding='utf-8')
     contents = fopen.readline()
 
     db = sqlite3.connect("PythonLP.db")
@@ -49,7 +49,7 @@ def get_result():
         contents = fopen.readline()
 
     # print(max)
-    fopen_again = open("article_sentences.txt", "r")
+    fopen_again = open("article_sentences.txt", "r", encoding='utf-8')
     for i in range(0, max):
         result = fopen_again.readline()
     return result
@@ -90,7 +90,7 @@ def from_file():
         for i in range(0, pdf.get_total_pages()):
             textbox.insert('end', pdf.get_optimized_content(i))
     elif filepath[-4:] == ".txt":
-        f = open(filepath, 'rb')
+        f = open(filepath, 'rb', encoding='utf-8')
         textbox.insert('end', f.read())
         f.close()
     else:

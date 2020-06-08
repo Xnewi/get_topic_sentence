@@ -29,7 +29,7 @@ class DB_Stopwords():
 
     def Stopwords_init(self):
         '''从txt文件初始化表Stopwords'''
-        fopen = open("stopwords.txt", "r")
+        fopen = open("stopwords.txt", "r", encoding='utf-8')
         contents = fopen.read()
 
         # 将单词间均替换为空格
@@ -104,7 +104,7 @@ def db_insert_Stopwords(word):
 
 def db_init_Stopwords():
     '''从txt文件初始化表Stopwords'''
-    fopen = open("stopwords.txt", "r")
+    fopen = open("stopwords.txt", "r", encoding='utf-8')
     contents = fopen.read()
 
     # 将单词间均替换为空格
@@ -146,7 +146,7 @@ def remove_stopwords_from_words(list):
 
 
 def init_Stopwords():
-    #db_creat_Stopwords()
-    #db_init_Stopwords()
+    # db_creat_Stopwords()
+    # db_init_Stopwords()
     stopwords = DB_Stopwords()
     stopwords.Stopwords_init()
