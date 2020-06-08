@@ -86,8 +86,8 @@ def from_file():
     filepath = filedialog.askopenfilename()
     if filepath[-4:] == ".pdf":
         pdf = PdfScan()
-        pdf.init(filepath)
-        for i in range(1, pdf.get_total_pages()):
+        pdf.load(filepath)
+        for i in range(0, pdf.get_total_pages()):
             textbox.insert('end', pdf.get_optimized_content(i))
     elif filepath[-4:] == ".txt":
         f = open(filepath, 'rb')

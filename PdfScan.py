@@ -3,12 +3,14 @@ import re
 
 
 class PdfScan():
-    def init(self, filename):
+    def __init__(self):
+        pass
+
+    def load(self, filename):
         '''初始化：提供pdf文件名称'''
         # 以二进制的方式打开指定pdf文件
         pdfFile = open(filename, 'rb')
         self.pdfReader = PyPDF2.PdfFileReader(pdfFile)
-        pdfFile.close
 
     def get_total_pages(self):
         '''获取pdf总页数'''
@@ -16,8 +18,7 @@ class PdfScan():
 
     def get_page_content(self, page_number):
         '''获取指定页内容'''
-        page = self.pdfReader.getPage(page_number)
-        return page.extractText()
+        return self.pdfReader.getPage(page_number).extractText()
 
     def get_optimized_content(self, page_number):
         '''获取指定页经过优化的内容'''
