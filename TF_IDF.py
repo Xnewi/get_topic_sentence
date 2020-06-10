@@ -265,7 +265,6 @@ def db_insert_TFIDF_WaE():
 
     db.close()
 
-
 # 运行一次生成数据库
 if __name__ == "__main__":
     db_create_COCA()

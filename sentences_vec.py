@@ -28,6 +28,15 @@ class Process():
 
     def init(self):
         '''在使用其他函数前先使用，请务必调用'''
+
+        self.text = contents  # 原文本
+        self.sentences = []  # 源文本-句子
+        self.sentences_vec = []  # 源文本-句子-向量
+        self.tokenized_text = []  # 源文本-分词
+        self.tokenized_sentences_text = []  # 源文本-句子-分词
+        self.corpus = set()  # 源文本-语料库
+        self.corpus_dict = {}  # 源文本-语料库-数字映射
+
         # 变为小写文本
         self.text = self.text.lower()
         # 其他初始化
