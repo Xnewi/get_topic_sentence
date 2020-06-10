@@ -28,8 +28,6 @@ class Process():
 
     def init(self):
         '''在使用其他函数前先使用，请务必调用'''
-
-        self.text = contents  # 原文本
         self.sentences = []  # 源文本-句子
         self.sentences_vec = []  # 源文本-句子-向量
         self.tokenized_text = []  # 源文本-分词
