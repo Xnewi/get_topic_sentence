@@ -16,7 +16,7 @@ class Article():
 
     def arti_pretreat(self):
         '''文献原文预处理'''
-        fwrite = open("article_processed.txt", "w")
+        fwrite = open("article_processed.txt", "w", encoding='utf-8')
 
         # 全文转化为小写
         self.pretreated_contents = self.contents.lower()
@@ -36,7 +36,7 @@ class Article():
         # 文献原文预处理
         self.arti_pretreat()
 
-        fwrite = open("article_sentences.txt", "w")
+        fwrite = open("article_sentences.txt", "w", encoding='utf-8')
 
         # 匹配出以标点结尾的句子
         sentences = re.findall(".*?[\.,\?]", self.pretreated_contents, re.S)
@@ -50,7 +50,7 @@ class Article():
         # 文献原文预处理
         self.arti_pretreat()
 
-        fwrite = open("article_words.txt", "w")
+        fwrite = open("article_words.txt", "w", encoding='utf-8')
 
         # 删除换行符
         words = re.sub("\n", "", self.pretreated_contents)
@@ -104,7 +104,7 @@ class DB_WaE():
         except:
             self.db.rollback()
 
-        #创建表WaE
+        # 创建表WaE
         self.WaE_create()
 
     def WaE_words_count(self, words):
@@ -114,7 +114,7 @@ class DB_WaE():
         '''
         # 将list转为set
         s = set(words)
-        #再把set转回list
+        # 再把set转回list
         s = list(s)
         # 删除停止词
         remove_stopwords_from_words(s)
@@ -131,7 +131,7 @@ class DB_WaE():
 
 def article_init(contents):
     '''文献原文预处理'''
-    fwrite = open("article_processed.txt", "w")
+    fwrite = open("article_processed.txt", "w", encoding='utf-8')
 
     # 全文转化为小写
     contents = contents.lower()
@@ -150,9 +150,9 @@ def article_transform_to_sentences(article):
     # 文献原文预处理
     article_init(article)
 
-    fopen = open("article_processed.txt", "r")
+    fopen = open("article_processed.txt", "r", encoding='utf-8')
     contents = fopen.read()
-    fwrite = open("article_sentences.txt", "w")
+    fwrite = open("article_sentences.txt", "w", encoding='utf-8')
 
     # 匹配出以标点结尾的句子
     sentences = re.findall(".*?[\.,\?]", contents, re.S)
@@ -163,9 +163,9 @@ def article_transform_to_sentences(article):
 
 def sentences_transform_to_words():
     '''用于把短句拆分为单词'''
-    fopen = open("article_sentences.txt", "r")
+    fopen = open("article_sentences.txt", "r", encoding='utf-8')
     contents = fopen.read()
-    fwrite = open("article_words.txt", "w")
+    fwrite = open("article_words.txt", "w", encoding='utf-8')
 
     # 删除换行符
     words = re.sub("\n", "", contents)
@@ -220,7 +220,7 @@ def db_insert_WaE(word, quantity):
 
 def words_count():
     '''单词计数并将数据压入表WaE中'''
-    fopen = open("article_sentences.txt", "r")
+    fopen = open("article_sentences.txt", "r", encoding='utf-8')
     contents = fopen.read()
 
     # 将单词间均替换为空格
@@ -261,13 +261,13 @@ def db_recreate_WaE():
 
 
 def init_data(article):
-    #db_recreate_WaE()
-    #db_create_WaE()
+    # db_recreate_WaE()
+    # db_create_WaE()
 
-    #article_transform_to_sentences(article)
-    #sentences_transform_to_words()
+    # article_transform_to_sentences(article)
+    # sentences_transform_to_words()
 
-    #words_count()
+    # words_count()
 
     wae = DB_WaE()
     wae.WaE_create()
@@ -277,6 +277,7 @@ def init_data(article):
     arti.arti_transform_to_words()
 
     wae.WaE_words_count(arti.words)
+
 
 test = Article('''I'M GOING RUNNING TODAY. I am not concerned about my calorie consumption for the day, nor am I anxious to get in shape for the winter season. I just want to go running.
 
