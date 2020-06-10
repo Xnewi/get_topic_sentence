@@ -1,74 +1,26 @@
 from PdfScan import PdfScan
-from DataProcessing import init_data
-from Stopwords import init_Stopwords
-from Stopwords import db_search_Stopwords
-from TF_IDF import db_insert_TFIDF_WaE
-import re
-import sqlite3
 import tkinter
 from tkinter import scrolledtext, filedialog, messagebox
-
-
-
-def get_result():
-
-    fopen = open("article_sentences.txt", "r", encoding='utf-8')
-    contents = fopen.readline()
-
-    db = sqlite3.connect("PythonLP.db")
-    cur = db.cursor()
-
-    max = 0
-    now = 0
-    result = ''
-    while contents:
-        now += 1
-        # 删除换行符
-        words = re.sub("\n", "", contents)
-        # 将所有标点替换为空格
-        words = re.sub("[\.,\?]", " ", words)
-        # 提取单个单词
-        words = re.findall(".*?\s", words, re.S)
-        sum = 0
-        for item in words:
-            sql = 'SELECT*FROM WaE WHERE WORD LIKE "%s";' % (item.strip())
-
-            cur.execute(sql)
-            try:
-                result = cur.fetchone()[2]
-            except:
-                result = 0
-            sum += result
-
-        #print(contents, sum / len(words))
-        try:
-            if max < sum / len(words):
-                max = now
-        except:
-            pass
-        contents = fopen.readline()
-
-    # print(max)
-    fopen_again = open("article_sentences.txt", "r", encoding='utf-8')
-    for i in range(0, max):
-        result = fopen_again.readline()
-    return result
-
+from NLTKProcessing import Process
+from AP import AP
 
 def process(article):
     textvar = tkinter.StringVar()
     textvar.initialize('处理中......')
 
     try:
-        init_data(article)
-        init_Stopwords()
-        db_insert_TFIDF_WaE()
-        result = get_result()
+        deal = Process(article)
+        deal.init()
+        ap = AP(deal)
+        msg = '可能的中心句：\n'
+        for i in ap.centers:
+            msg += deal.sentences[i] + '\n'
+        ap.reset()
     except Exception as err:
         messagebox.showwarning(
             title='处理错误', message='处理过程有出错，检查一下文章是否符合规范！\n错误信息：' + str(err))
     else:
-        messagebox.showinfo(title='找到中心句', message=result)
+        messagebox.showinfo(title='找到中心句', message=msg)
     var.set('')
     button1.config(state='active')
     button2.config(state='active')
@@ -90,7 +42,7 @@ def from_file():
         for i in range(0, pdf.get_total_pages()):
             textbox.insert('end', pdf.get_optimized_content(i))
     elif filepath[-4:] == ".txt":
-        f = open(filepath, 'rb', encoding='utf-8')
+        f = open(filepath, 'r', encoding='utf-8')
         textbox.insert('end', f.read())
         f.close()
     else:
