@@ -34,7 +34,6 @@ class Process():
         self.tokenized_sentences_text = []  # 源文本-句子-分词
         self.corpus = set()  # 源文本-语料库
         self.corpus_dict = {}  # 源文本-语料库-数字映射
-
         # 变为小写文本
         self.text = self.text.lower()
         # 其他初始化
@@ -114,11 +113,28 @@ class Process():
 
         return (inner_product/sqrt(square_length_vec1*square_length_vec2))
 
+class WD():
+    def __init__(self, word):
+        self.word = word
 
-test = Process(test_text)
-test.init()
-# print(test.corpus_dict)
-# print(test.sentences)
-# print(test.vector_rep(49))
-print(len(test.sentences_vec))
-print(test.similarity_compare(49, 1))
+    def means(self):
+        '''返回单词的所有意思'''
+        return wordnet.synsets(self.word)
+
+    def definition(self, str1, str2):
+        '''
+        返回单词的指定定义
+        @param str1, type str: 单词的词性
+        @param str2, type str: 词性序号
+        '''
+        valid_str = '''%s.%s.%s''' % (self.word, str1, str2)
+        return wordnet.synset(valid_str).definition()
+
+    def examples(self, str1, str2):
+        '''
+        返回单词的例句
+        @param str1, type str: 单词的词性
+        @param str2, type str: 词性序号
+        '''
+        valid_str = '''%s.%s.%s''' % (self.word, str1, str2)
+        return wordnet.synset(valid_str).examples()
