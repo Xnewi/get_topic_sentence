@@ -115,30 +115,3 @@ test.init()
 # print(test.vector_rep(49))
 print(len(test.sentences_vec))
 print(test.similarity_compare(49, 1))
-
-
-class WD():
-    def __init__(self, word):
-        self.word = word
-
-    def means(self):
-        '''返回单词的所有意思'''
-        return wordnet.synsets(self.word)
-
-    def definition(self, str1, str2):
-        '''
-        返回单词的指定定义
-        @param str1, type str: 单词的词性
-        @param str2, type str: 词性序号
-        '''
-        valid_str = '''%s.%s.%s''' % (self.word, str1, str2)
-        return wordnet.synset(valid_str).definition()
-
-    def examples(self, str1, str2):
-        '''
-        返回单词的例句
-        @param str1, type str: 单词的词性
-        @param str2, type str: 词性序号
-        '''
-        valid_str = '''%s.%s.%s''' % (self.word, str1, str2)
-        return wordnet.synset(valid_str).examples()
