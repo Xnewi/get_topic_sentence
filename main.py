@@ -50,26 +50,32 @@ def from_file():
         
 # 主窗口
 window = tkinter.Tk()
+
 window.title('文章中心句提取程序')
 window.geometry('800x600')
-window.resizable(width=False, height=False)
+screenwidth = window.winfo_screenwidth()
+screenheight = window.winfo_screenheight()
+x = (screenwidth - 800) / 2
+y = (screenheight - 600) / 2
+window.geometry("%dx%d+%d+%d" %(800,600,x,y))
+window.minsize(800, 600)
+window.maxsize(screenwidth, screenheight)
+window.resizable(width=True, height=True)
 window.iconbitmap('icon.ico')
+window.update()
 
-tkinter.Label(window, text='请输入文章（英文）：', font=(
-    '微软雅黑', 14)).place(x=10, y=10, anchor='nw')
+label1 = tkinter.Label(window, text='请输入文章（英文）：', font=('微软雅黑', 14)).place(x=10, y=10, anchor='nw')
 textbox = scrolledtext.ScrolledText(window, font=('微软雅黑', 14))
-textbox.place(x=10, y=40, anchor='nw', width=780, height=500)
+textbox.place(relx=0.0125, rely=0.0667, anchor='nw', relwidth=0.975, relheight=0.8)
 
 var = tkinter.StringVar()
 var.set('')
 tkinter.Label(window, textvariable=var, font=('微软雅黑', 12)).place(x=50, y=560)
 
-button1 = tkinter.Button(window, text='提交', font=(
-    '微软雅黑', 14), command=from_input)
-button1.place(x=340, y=550, anchor='nw', width=120, height=40)
+button1 = tkinter.Button(window, text='提交', font=('微软雅黑', 14), command=from_input)
+button1.place(relx=0.5, rely=0.935, anchor='center', width=120, height=40)
 
-button2 = tkinter.Button(
-    window, text='上传', font=('微软雅黑', 10), command=from_file)
-button2.place(x=675, y=555, anchor='nw', width=90, height=30)
+button2 = tkinter.Button(window, text='上传', font=('微软雅黑', 10), command=from_file)
+button2.place(relx=0.915, rely=0.935, anchor='center', width=90, height=30)
 
 tkinter.mainloop()
