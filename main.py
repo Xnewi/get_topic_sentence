@@ -1,7 +1,7 @@
 from PdfScan import PdfScan
 import tkinter
 from tkinter import scrolledtext, filedialog, messagebox
-from NLTKProcessing import Process
+from sentences_vec import Process
 from AP import AP
 
 def process(article):
