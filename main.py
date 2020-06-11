@@ -7,20 +7,22 @@ from if_idf_remastered import TF_IDF
 
 def process(article):
     try:
+        msg = '当前算法：' + alvar.get() + '\n可能的中心句：\n'
+        index = 1
         if alvar.get() == 'AP':
             deal = Process(article)
             deal.init()
             ap = AP(deal)
-            msg = '可能的中心句：\n'
             for i in ap.centers:
-                msg += deal.sentences[i] + '\n'
+                msg += str(index) + '. ' + deal.sentences[i] + '\n'
+                index += 1
             ap.reset()
         else:
             deal = TF_IDF(article)
             deal.init()
-            msg = '可能的中心句：\n'
             for e in deal.sorted_sentences_scores[:3]:
-                msg += e[0] + '\n'
+                msg += str(index) + '. ' + e[0] + '\n'
+                index += 1
     except Exception as err:
         messagebox.showwarning(
             title='处理错误', message='处理过程有出错，检查一下文章是否符合规范！\n错误信息：' + str(err))
@@ -73,7 +75,7 @@ textbox = scrolledtext.ScrolledText(window, font=('微软雅黑', 14))
 textbox.place(relx=0.0125, rely=0.0667, anchor='nw', relwidth=0.975, relheight=0.8)
 
 button1 = tkinter.Button(window, text='提交', font=('微软雅黑', 14), command=from_input)
-button1.place(relx=0.5, rely=0.935, anchor='center', width=120, height=40)
+button1.place(relx=0.5, rely=0.935, anchor='center', width=120, height=45)
 
 button2 = tkinter.Button(window, text='上传', font=('微软雅黑', 10), command=from_file)
 button2.place(relx=0.915, rely=0.935, anchor='center', width=90, height=30)

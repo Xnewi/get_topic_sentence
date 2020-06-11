@@ -107,6 +107,6 @@ def iter_update_A(dataLen,R,A):
                     
                 ##带入阻尼系数更新A值
                 A[i][k] = (1-lam)*A[i][k] +lam*old_a
-    print("max_a:"+str(numpy.max(A)))
+    #print("max_a:"+str(numpy.max(A)))
     #print(np.min(A))
     return A

@@ -1,7 +1,6 @@
 import nltk
 from math import sqrt
 from nltk.corpus import wordnet
-from DataProcessing import Article
 from nltk import word_tokenize
 from if_idf_remastered import TF_IDF
 
