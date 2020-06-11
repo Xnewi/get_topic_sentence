@@ -112,19 +112,3 @@ class TF_IDF():
             result[word] = score
         return result
 
-
-test = TF_IDF(text1)
-test.init()
-#print(t3.count)
-#print(t3.count["across"])
-#print(t3.count["by"])
-
-#print(test.dict)
-#print(test.sorted_word_scores)
-print(test.sorted_sentences_scores)
-#print(test.tfidf_top(3))
-
-# print(test.sentences)
-# print(test.tokenized_text)
-# print(test.count)
-# print(test.nostopwords_tokenized_text)
