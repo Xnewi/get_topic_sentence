@@ -5,17 +5,6 @@ from collections import Counter
 from nltk.corpus import stopwords
 from gensim import corpora, models, matutils
 
-text1 = """
-Football is a family of team sports that involve, to varying degrees, kicking a ball to score a goal. 
-Unqualified, the word football is understood to refer to whichever form of football is the most popular 
-in the regional context in which the word appears. Sports commonly called football in certain places 
-include association football (known as soccer in some countries); gridiron football (specifically American 
-football or Canadian football); Australian rules football; rugby football (either rugby league or rugby union); 
-and Gaelic football. These different variations of football are known as football codes.
-"""
-
-
-
 class TF_IDF():
     def __init__(self, contents):
         self.text = contents  # 原文本
