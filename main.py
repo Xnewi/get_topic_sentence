@@ -20,7 +20,7 @@ def process(article):
             deal.init()
             msg = '可能的中心句：\n'
             for e in deal.sorted_sentences_scores[:3]:
-                msg += e + '\n'
+                msg += e[0] + '\n'
     except Exception as err:
         messagebox.showwarning(
             title='处理错误', message='处理过程有出错，检查一下文章是否符合规范！\n错误信息：' + str(err))
