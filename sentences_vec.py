@@ -3,6 +3,8 @@ from math import sqrt
 from nltk.corpus import wordnet
 from DataProcessing import Article
 from nltk import word_tokenize
+from if_idf_remastered import TF_IDF
+
 
 class Process():
     def __init__(self, contents):
@@ -16,7 +18,7 @@ class Process():
 
     def init(self):
         '''在使用其他函数前先使用，请务必调用'''
-        #特殊处理
+        # 特殊处理
         self.sentences = []  # 源文本-句子
         self.sentences_vec = []  # 源文本-句子-向量
         self.tokenized_text = []  # 源文本-分词
@@ -36,8 +38,12 @@ class Process():
 
     def sentences_init(self):
         '''分句，不必手动调用'''
-        temp = Article(self.text)
-        temp.arti_transform_to_sentences()
+        # temp = Article(self.text)
+        # temp.arti_transform_to_sentences()
+        # self.sentences = temp.sentences
+
+        temp = TF_IDF(self.text)
+        temp.init()
         self.sentences = temp.sentences
 
         self.tokenized_sentences_text = [[word for word in word_tokenize(
@@ -105,7 +111,7 @@ class Process():
 
 
 class ProcessSE():
-    #SE: 特殊版本，所有内容均不包含stopwords
+    # SE: 特殊版本，所有内容均不包含stopwords
     def __init__(self, contents):
         self.text = contents  # 原文本
         self.sentences = []  # 源文本-句子
@@ -117,7 +123,7 @@ class ProcessSE():
 
     def init(self):
         '''在使用其他函数前先使用，请务必调用'''
-        #特殊处理
+        # 特殊处理
         self.sentences = []  # 源文本-句子
         self.sentences_vec = []  # 源文本-句子-向量
         self.tokenized_text = []  # 源文本-分词

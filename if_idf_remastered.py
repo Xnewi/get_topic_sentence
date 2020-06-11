@@ -126,3 +126,4 @@ and Gaelic football. These different variations of football are known as footbal
 test = TF_IDF(text1)
 test.init()
 print(test.sorted_sentences_scores)
+print(test.sentences)
