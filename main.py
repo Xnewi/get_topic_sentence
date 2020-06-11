@@ -71,6 +71,7 @@ window.maxsize(screenwidth, screenheight)
 window.resizable(width=True, height=True)
 window.iconbitmap('icon.ico')
 window.update()
+menubar = Menu(window)
 
 label1 = tkinter.Label(window, text='请输入文章（英文）：', font=('微软雅黑', 14)).place(x=10, y=10, anchor='nw')
 textbox = scrolledtext.ScrolledText(window, font=('微软雅黑', 14))
@@ -82,8 +83,14 @@ tkinter.Label(window, textvariable=var, font=('微软雅黑', 12)).place(x=50, y
 
 button1 = tkinter.Button(window, text='提交', font=('微软雅黑', 14), command=from_input)
 button1.place(relx=0.5, rely=0.935, anchor='center', width=120, height=40)
+menu1 = Menu(window)
+for item in ['AP','TF-IDF']:
+    menu1.add_command(label = item)
+menubar.add_cascade(label="设置",menu=menu1)
+window['menu']=menubar
 
 button2 = tkinter.Button(window, text='上传', font=('微软雅黑', 10), command=from_file)
 button2.place(relx=0.915, rely=0.935, anchor='center', width=90, height=30)
 
 tkinter.mainloop()
+
