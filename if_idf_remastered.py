@@ -5,6 +5,7 @@ from collections import Counter
 from nltk.corpus import stopwords
 from gensim import corpora, models, matutils
 
+
 class TF_IDF():
     def __init__(self, contents):
         self.text = contents  # 原文本
@@ -29,7 +30,7 @@ class TF_IDF():
 
     def tokens_init(self):
         '''原文本分词 + 分句'''
-        self.text=self.text.lower()
+        self.text = self.text.lower()
         # 删掉所有换行符
         self.text = self.text.replace('\n', '')
         # 分句
@@ -42,25 +43,25 @@ class TF_IDF():
                 # 去掉标点符号
                 if word not in string.punctuation:
                     self.tokens.append(word)
-    
+
     def scores_init(self):
         '''计算文章单词分数和每句分数'''
-        #单词分数
+        # 单词分数
         word_scores = {word: self.tfidf_cal(
-                    word) for word in self.dict}
+            word) for word in self.dict}
         self.sorted_word_scores = sorted(
             word_scores.items(), key=lambda x: x[1], reverse=True)
 
-        #句子分数
+        # 句子分数
         sentence_scores = {}
         for i in range(0, len(self.sentences)):
-            #先拆句子成词
+            # 先拆句子成词
             sentence_tokenized = nltk.word_tokenize(self.sentences[i])
 
-            #print(type(self.nostopwords_tokenized_text))
-            #print(type(self.sorted_word_scores))
-            #print(self.sorted_word_scores)
-            #print(sentence_tokenized)
+            # print(type(self.nostopwords_tokenized_text))
+            # print(type(self.sorted_word_scores))
+            # print(self.sorted_word_scores)
+            # print(sentence_tokenized)
 
             score = 0
             for word in sentence_tokenized:
@@ -68,12 +69,13 @@ class TF_IDF():
                 #停止词: 零分
                 if word not in self.nostopwords_tokenized_text:
                     score += 0
-                #非停止词: 加分~
+                # 非停止词: 加分~
                 else:
                     score += word_scores[word]
 
-                sentence_scores[self.sentences[i]] = score / (len(sentence_tokenized))
-        
+                sentence_scores[self.sentences[i]] = score / \
+                    (len(sentence_tokenized))
+
         self.sorted_sentences_scores = sorted(
             sentence_scores.items(), key=lambda x: x[1], reverse=True)
 
@@ -112,3 +114,15 @@ class TF_IDF():
             result[word] = score
         return result
 
+
+text1 = """
+Football is a family of team sports that involve, to varying degrees, kicking a ball to score a goal. 
+Unqualified, the word football is understood to refer to whichever form of football is the most popular 
+in the regional context in which the word appears. Sports commonly called football in certain places 
+include association football (known as soccer in some countries); gridiron football (specifically American 
+football or Canadian football); Australian rules football; rugby football (either rugby league or rugby union); 
+and Gaelic football. These different variations of football are known as football codes.
+"""
+test = TF_IDF(text1)
+test.init()
+print(test.sorted_sentences_scores)
