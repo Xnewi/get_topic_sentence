@@ -92,11 +92,11 @@ class TF_IDF():
         self.dict = Counter(filtered)
 
     def containing_cal(self, word):
-        return sum(1 for self.dict in self.nostopwords_tokenized_text if word in self.dict)
+        temp_dict = self.dict
+        return sum(1 for temp_dict in self.nostopwords_tokenized_text if word in temp_dict)
 
     def tf_cal(self, word):
         '''计算指定词的tf'''
-        self.dict_init()
         return self.dict[word] / sum(self.dict.values())
 
     def idf_cal(self, word):
