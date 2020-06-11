@@ -4,3 +4,6 @@ PythonLP.db
 *.txt
 .vscode/
 *.pdf
+/build/main
+/env
+/main.spec
