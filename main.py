@@ -5,6 +5,7 @@ from sentences_vec import Process
 from AP import AP
 from if_idf_remastered import TF_IDF
 
+
 def process(article):
     try:
         msg = '当前算法：' + alvar.get() + '\n可能的中心句：\n'
@@ -70,25 +71,33 @@ window.resizable(width=True, height=True)
 window.iconbitmap('icon.ico')
 window.update()
 
-label1 = tkinter.Label(window, text='请输入文章（英文）：', font=('微软雅黑', 14)).place(x=10, y=10, anchor='nw')
+label1 = tkinter.Label(window, text='请输入文章（英文）：', font=(
+    '微软雅黑', 14)).place(x=10, y=10, anchor='nw')
 textbox = scrolledtext.ScrolledText(window, font=('微软雅黑', 14))
-textbox.place(relx=0.0125, rely=0.0667, anchor='nw', relwidth=0.975, relheight=0.8)
+textbox.place(relx=0.0125, rely=0.0667, anchor='nw',
+              relwidth=0.975, relheight=0.8)
 
-button1 = tkinter.Button(window, text='提交', font=('微软雅黑', 14), command=from_input)
+button1 = tkinter.Button(window, text='提交', font=(
+    '微软雅黑', 14), command=from_input)
 button1.place(relx=0.5, rely=0.935, anchor='center', width=120, height=45)
 
-button2 = tkinter.Button(window, text='上传', font=('微软雅黑', 10), command=from_file)
+button2 = tkinter.Button(
+    window, text='上传', font=('微软雅黑', 10), command=from_file)
 button2.place(relx=0.915, rely=0.935, anchor='center', width=90, height=30)
 
 alvar = tkinter.StringVar()
 alvar.set('AP')
+
+
 def changeal():
     if alvar.get() == 'AP':
         alvar.set('TF-IDF')
     else:
         alvar.set('AP')
 
-button3 = tkinter.Button(window, textvar=alvar, font=('微软雅黑', 10), command=changeal)
+
+button3 = tkinter.Button(window, textvar=alvar,
+                         font=('微软雅黑', 10), command=changeal)
 button3.place(relx=0.085, rely=0.935, anchor='center', width=90, height=30)
 
 tkinter.mainloop()
