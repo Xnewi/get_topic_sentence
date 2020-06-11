@@ -3,19 +3,27 @@ import tkinter
 from tkinter import scrolledtext, filedialog, messagebox
 from sentences_vec import Process
 from AP import AP
+from if_idf_remastered import TF_IDF
+
+engine = 1
 
 def process(article):
     textvar = tkinter.StringVar()
     textvar.initialize('处理中......')
 
     try:
-        deal = Process(article)
-        deal.init()
-        ap = AP(deal)
-        msg = '可能的中心句：\n'
-        for i in ap.centers:
-            msg += deal.sentences[i] + '\n'
-        ap.reset()
+        if engine == 1:
+            deal = Process(article)
+            deal.init()
+            ap = AP(deal)
+            msg = '可能的中心句：\n'
+            for i in ap.centers:
+                msg += deal.sentences[i] + '\n'
+            ap.reset()
+        else:
+            deal = TF_IDF(article)
+            deal.init()
+            msg = deal.tfidf_words_top(3)
     except Exception as err:
         messagebox.showwarning(
             title='处理错误', message='处理过程有出错，检查一下文章是否符合规范！\n错误信息：' + str(err))
