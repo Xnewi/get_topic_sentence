@@ -67,12 +67,13 @@ def pop_up_box():
     def input():
         nonlocal pages
         pages = entry1.get()
-        root.quit()
+        root.quit();
     btn1 = tkinter.Button(root, text='确定', command=input)     # 按下此按钮(Input), 触发inputint函数
     btn1.pack(side='bottom')
  
     # 上述完成之后, 开始真正弹出弹出框
     root.mainloop()
+    root.destroy()
     return pages
 
 # 主窗口
