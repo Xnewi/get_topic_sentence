@@ -33,13 +33,16 @@ class PdfScan():
         return contents
 
     def page_number_return_SEfunction(self, command):
-        com = re.sub('-', ' ', command)
-        first = re.findall('\d ',com)
-        last = re.findall(' \d', com)
-        first = str(first[0]).strip()
-        last = str(last[0]).strip()
+        if command == '':
+            result = range(self.get_total_pages())
+        else:
+            com = re.sub('-', ' ', command)
+            first = re.findall('\d ',com)
+            last = re.findall(' \d', com)
+            first = str(first[0]).strip()
+            last = str(last[0]).strip()
 
-        result = []
-        for i in range(int(first), int(last)+1):
-            result.append(i - 1)
+            result = []
+            for i in range(int(first), int(last)+1):
+                result.append(i - 1)
         return result
