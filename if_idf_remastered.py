@@ -114,6 +114,7 @@ class TF_IDF():
             result[word] = score
         return result
 
+
 if __name__ == '__main__':
     text1 = """
     Football is a family of team sports that involve, to varying degrees, kicking a ball to score a goal. 

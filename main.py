@@ -56,25 +56,29 @@ def from_file():
     else:
         messagebox.showwarning(title='文件格式错误', message='请上传txt或pdf文件')
 
+
 def pop_up_box():
     pages = ''
     root = tkinter.Tk(className='输入PDF页码,eg:1-3 (留空为全部）')  # 弹出框框名
     root.geometry('400x60')     # 设置弹出框的大小 w x h
     var = tkinter.StringVar()   # 这即是输入框中的内容
-    var.set('') # 通过var.get()/var.set() 来 获取/设置var的值
+    var.set('')  # 通过var.get()/var.set() 来 获取/设置var的值
     entry1 = tkinter.Entry(root, textvariable=var)  # 设置"文本变量"为var
     entry1.pack()   # 将entry"打上去"
+
     def input():
         nonlocal pages
         pages = entry1.get()
-        root.quit();
-    btn1 = tkinter.Button(root, text='确定', command=input)     # 按下此按钮(Input), 触发inputint函数
+        root.quit()
+    # 按下此按钮(Input), 触发inputint函数
+    btn1 = tkinter.Button(root, text='确定', command=input)
     btn1.pack(side='bottom')
- 
+
     # 上述完成之后, 开始真正弹出弹出框
     root.mainloop()
     root.destroy()
     return pages
+
 
 # 主窗口
 window = tkinter.Tk()
