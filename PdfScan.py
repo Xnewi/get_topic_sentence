@@ -37,7 +37,7 @@ class PdfScan():
             result = range(self.get_total_pages())
         else:
             com = re.sub('-', ' ', command)
-            first = re.findall('\d ',com)
+            first = re.findall('\d ', com)
             last = re.findall(' \d', com)
             first = str(first[0]).strip()
             last = str(last[0]).strip()

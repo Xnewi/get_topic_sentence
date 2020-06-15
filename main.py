@@ -5,6 +5,7 @@ from sentences_vec import Process
 from AP import AP
 from if_idf_remastered import TF_IDF
 
+
 def process(article):
     try:
         msg = '当前算法：' + alvar.get() + '\n可能的中心句：\n'
@@ -55,25 +56,29 @@ def from_file():
     else:
         messagebox.showwarning(title='文件格式错误', message='请上传txt或pdf文件')
 
+
 def pop_up_box():
     pages = ''
     root = tkinter.Tk(className='输入PDF页码,eg:1-3 (留空为全部）')  # 弹出框框名
     root.geometry('400x60')     # 设置弹出框的大小 w x h
     var = tkinter.StringVar()   # 这即是输入框中的内容
-    var.set('') # 通过var.get()/var.set() 来 获取/设置var的值
+    var.set('')  # 通过var.get()/var.set() 来 获取/设置var的值
     entry1 = tkinter.Entry(root, textvariable=var)  # 设置"文本变量"为var
     entry1.pack()   # 将entry"打上去"
+
     def input():
         nonlocal pages
         pages = entry1.get()
-        root.quit();
-    btn1 = tkinter.Button(root, text='确定', command=input)     # 按下此按钮(Input), 触发inputint函数
+        root.quit()
+    # 按下此按钮(Input), 触发inputint函数
+    btn1 = tkinter.Button(root, text='确定', command=input)
     btn1.pack(side='bottom')
- 
+
     # 上述完成之后, 开始真正弹出弹出框
     root.mainloop()
     root.destroy()
     return pages
+
 
 # 主窗口
 window = tkinter.Tk()
@@ -91,25 +96,33 @@ window.resizable(width=True, height=True)
 window.iconbitmap('icon.ico')
 window.update()
 
-label1 = tkinter.Label(window, text='请输入文章（英文）：', font=('微软雅黑', 14)).place(x=10, y=10, anchor='nw')
+label1 = tkinter.Label(window, text='请输入文章（英文）：', font=(
+    '微软雅黑', 14)).place(x=10, y=10, anchor='nw')
 textbox = scrolledtext.ScrolledText(window, font=('微软雅黑', 14))
-textbox.place(relx=0.0125, rely=0.0667, anchor='nw', relwidth=0.975, relheight=0.8)
+textbox.place(relx=0.0125, rely=0.0667, anchor='nw',
+              relwidth=0.975, relheight=0.8)
 
-button1 = tkinter.Button(window, text='提交', font=('微软雅黑', 14), command=from_input)
+button1 = tkinter.Button(window, text='提交', font=(
+    '微软雅黑', 14), command=from_input)
 button1.place(relx=0.5, rely=0.935, anchor='center', width=120, height=45)
 
-button2 = tkinter.Button(window, text='上传', font=('微软雅黑', 10), command=from_file)
+button2 = tkinter.Button(
+    window, text='上传', font=('微软雅黑', 10), command=from_file)
 button2.place(relx=0.915, rely=0.935, anchor='center', width=90, height=30)
 
 alvar = tkinter.StringVar()
 alvar.set('AP')
+
+
 def changeal():
     if alvar.get() == 'AP':
         alvar.set('TF-IDF')
     else:
         alvar.set('AP')
 
-button3 = tkinter.Button(window, textvar=alvar, font=('微软雅黑', 10), command=changeal)
+
+button3 = tkinter.Button(window, textvar=alvar,
+                         font=('微软雅黑', 10), command=changeal)
 button3.place(relx=0.085, rely=0.935, anchor='center', width=90, height=30)
 
 tkinter.mainloop()
