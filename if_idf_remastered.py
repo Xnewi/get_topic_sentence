@@ -4,6 +4,8 @@ import math
 from collections import Counter
 from nltk.corpus import stopwords
 from gensim import corpora, models, matutils
+from wordcloud import WordCloud
+import PIL.Image as image
 
 
 class TF_IDF():
@@ -19,8 +21,8 @@ class TF_IDF():
         self.dict = Counter()
 
         self.nostopwords_tokenized_text = []
-        self.sorted_word_scores = {}
-        self.sorted_sentences_scores = {}
+        self.sorted_word_scores = []
+        self.sorted_sentences_scores = []
 
     def init(self):
         self.tokens_init()
@@ -114,6 +116,11 @@ class TF_IDF():
             result[word] = score
         return result
 
+    def word_cloud(self):
+        wordcloud = WordCloud(width=1920, height=1080).generate(self.text)
+        image_produce = wordcloud.to_image()
+        image_produce.show()
+
 
 if __name__ == '__main__':
     text1 = """
@@ -127,4 +134,5 @@ if __name__ == '__main__':
     test = TF_IDF(text1)
     test.init()
     print(test.sorted_sentences_scores)
-    print(test.sentences)
+    print(test.sorted_word_scores)
+    test.word_cloud()
