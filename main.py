@@ -125,4 +125,13 @@ button3 = tkinter.Button(window, textvar=alvar,
                          font=('微软雅黑', 10), command=changeal)
 button3.place(relx=0.085, rely=0.935, anchor='center', width=90, height=30)
 
+def wordimage():
+    deal = TF_IDF(textbox.get('0.0', 'end'))
+    deal.init()
+    deal.word_cloud()
+
+button4 = tkinter.Button(
+    window, text='词云', font=('微软雅黑', 10), command=wordimage)
+button4.place(relx=0.8, rely=0.935, anchor='center', width=90, height=30)
+
 tkinter.mainloop()

@@ -1,6 +1,5 @@
 ﻿import numpy
 
-
 class AP:
     # 相似度矩阵
     ma_sim = []

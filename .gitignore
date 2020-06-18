@@ -7,3 +7,5 @@ PythonLP.db
 /build/main
 /env
 /main.spec
+/get_topic_sentence/Lib/site-packages
+/get_topic_sentence

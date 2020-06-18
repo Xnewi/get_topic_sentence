@@ -7,7 +7,6 @@ from gensim import corpora, models, matutils
 from wordcloud import WordCloud
 import PIL.Image as image
 
-
 class TF_IDF():
     def __init__(self, contents):
         self.text = contents  # 原文本
