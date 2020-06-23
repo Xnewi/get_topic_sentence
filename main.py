@@ -96,8 +96,8 @@ window.resizable(width=True, height=True)
 window.iconbitmap('icon.ico')
 window.update()
 
-label1 = tkinter.Label(window, text='请输入文章（英文）：', font=(
-    '微软雅黑', 14)).place(x=10, y=10, anchor='nw')
+tkinter.Label(window, text='请输入文章（英文）：', font=(
+'微软雅黑', 14)).place(x=10, y=10, anchor='nw')
 textbox = scrolledtext.ScrolledText(window, font=('微软雅黑', 14))
 textbox.place(relx=0.0125, rely=0.0667, anchor='nw',
               relwidth=0.975, relheight=0.8)

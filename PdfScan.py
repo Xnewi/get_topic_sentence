@@ -32,17 +32,36 @@ class PdfScan():
 
         return contents
 
-    def page_number_return_SEfunction(self, command):
-        if command == '':
+    def page_number_return_SEfunction(self, stri):
+        def analyze(exp):
+            data = []
+            if '-' in exp:
+                first = re.findall('\d-', exp)
+                last = re.findall('-\d', exp)
+                first = int(first[0][:-1])
+                last = int(last[0][1:])
+                step = -1 if first > last else 1
+                for i in range(first, last + step, step):
+                    data.append(i - 1)
+            else:
+                data.append(int(exp) - 1)
+            return data
+        result = []
+        stri = re.sub(' ', '', stri)
+        stri = re.sub('，', ',', stri)
+        if stri == '':
             result = range(self.get_total_pages())
         else:
-            com = re.sub('-', ' ', command)
-            first = re.findall('\d ', com)
-            last = re.findall(' \d', com)
-            first = str(first[0]).strip()
-            last = str(last[0]).strip()
-
-            result = []
-            for i in range(int(first), int(last)+1):
-                result.append(i - 1)
+            last = 0
+            for i in range(len(stri)):
+                if stri[i] == ',':
+                    substr = stri[last:i]
+                    result.extend(analyze(substr))
+                    last = i + 1
+                elif i == len(stri) - 1:
+                    substr = stri[last:]
+                    result.extend(analyze(substr))
+        for e in result:
+            if e >= self.get_total_pages() or e < 0:
+                raise IndexError("页码下标越界")
         return result
