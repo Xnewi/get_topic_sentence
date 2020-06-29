@@ -93,7 +93,7 @@ window.geometry("%dx%d+%d+%d" % (800, 600, x, y))
 window.minsize(800, 600)
 window.maxsize(screenwidth, screenheight)
 window.resizable(width=True, height=True)
-window.iconbitmap('icon.ico')
+#window.iconbitmap('icon.ico')
 window.update()
 
 tkinter.Label(window, text='请输入文章（英文）：', font=(
